@@ -1,0 +1,135 @@
+INSTALLATION GUIDE - Raspberry Pi Alarm System
+===============================================
+
+## Method 1: Using requirements.txt (RECOMMENDED)
+
+### On Raspberry Pi:
+```bash
+# Install system dependencies
+sudo apt update
+sudo apt install -y python3-pip python3-dev portaudio19-dev
+sudo apt install -y alsa-utils pulseaudio bluetooth bluez bluez-tools
+sudo apt install -y espeak espeak-ng
+
+# Install Python packages from requirements.txt
+pip install -r requirements.txt
+```
+
+### On Windows (for development):
+```bash
+# Create virtual environment
+python -m venv venv
+venv\Scripts\activate
+
+# Install all dependencies
+pip install -r requirements.txt
+```
+
+---
+
+## Method 2: Manual Installation
+
+If requirements.txt fails, install individually:
+
+```bash
+pip install opencv-python==4.8.1.78
+pip install mediapipe==0.10.9
+pip install numpy==1.24.3
+pip install SpeechRecognition==3.10.0
+pip install pydub==0.25.1
+pip install pyaudio==0.2.13
+pip install pyttsx3==2.90
+pip install google-cloud-speech==2.21.0
+```
+
+---
+
+## Verify Installation
+
+```bash
+python3 -c "
+import cv2
+import mediapipe
+import numpy
+import speech_recognition
+import pyttsx3
+print('✓ All libraries installed successfully!')
+"
+```
+
+---
+
+## System Dependencies (Raspberry Pi Only)
+
+Run this if audio/Bluetooth isn't working:
+
+```bash
+# Audio recording/playback
+sudo apt install -y alsa-utils pulseaudio
+
+# Bluetooth support
+sudo apt install -y bluetooth bluez bluez-tools
+
+# Text-to-speech engine
+sudo apt install -y espeak espeak-ng
+
+# Enable I2S and Bluetooth on RPi
+sudo raspi-config  # Enable I2S under Interfacing Options
+```
+
+---
+
+## Troubleshooting
+
+### "No module named 'cv2'"
+```bash
+pip install --upgrade opencv-python
+```
+
+### "ImportError: libatlas.so.3"
+```bash
+sudo apt install -y libblas-dev liblapack-dev libatlas-base-dev
+```
+
+### "portaudio19-dev not found"
+```bash
+# On Raspberry Pi
+sudo apt install -y libportaudio2 libportaudiocpp0 portaudio19-dev
+
+# On Ubuntu
+sudo apt install -y portaudio19-dev
+```
+
+### "paplay not found"
+```bash
+sudo apt install -y pulseaudio
+```
+
+---
+
+## Files Included
+
+- `alarm_rpi.py` - Main alarm application
+- `requirements.txt` - Python package dependencies
+- `INSTALL.txt` - This file
+- `SETUP_USB_BT.md` - USB mic + Bluetooth setup guide
+- `QUICK_START_USB_BT.txt` - Quick reference
+
+---
+
+## Running the Alarm
+
+```bash
+# Activate virtual environment (if using venv)
+source venv/bin/activate  # Linux/Mac
+# or
+venv\Scripts\activate  # Windows
+
+# Run alarm
+python3 alarm_rpi.py
+```
+
+---
+
+Date: April 10, 2026
+Status: Ready for use
